@@ -60,7 +60,7 @@ def chatbot(query):
     try:
         logging.info(f"User: {query}")
         context = ""  
-        response = create_llm_chain(query, "./orbitRexvectorDB", context)
+        response = create_llm_chain(query, "./yaml_vectorDB", context)
         return response
 
     except Exception as e:

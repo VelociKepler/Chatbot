@@ -35,13 +35,14 @@ def get_chain(llm, vectorstore, custom_template):
 
 def create_llm_chain(query, vectorstore_path, context):
     llm = ChatOpenAI(model_name="gpt-4o-mini")  # Use ChatOpenAI for chat models
-    embeddings = OpenAIEmbeddings(model='text-embedding-ada-002')
+    embeddings = OpenAIEmbeddings(model='text-embedding-3-large')
     vectorstore = FAISS.load_local(vectorstore_path, embeddings, allow_dangerous_deserialization=True)
 
     custom_template = f"""
-    You are an AI assistant specializing in the Thai language name "น้องบอท" , serving customer information about product
+    You are an AI assistant specializing in the Thai language name "น้องบอท" ,
+    serving customer information about product
     if user asking about product pls answer in markdouwn langurage like professional web bloger
-    if you have to send product detail please send image too.
+    if you have to send product detail please send image and product page too.
     Context: {{context}}
     Original question: {{question}}"""
 
@@ -60,7 +61,7 @@ def chatbot(query):
     try:
         logging.info(f"User: {query}")
         context = ""  
-        response = create_llm_chain(query, "./yaml_vectorDB", context)
+        response = create_llm_chain(query, "./yaml2", context)
         return response
 
     except Exception as e:
